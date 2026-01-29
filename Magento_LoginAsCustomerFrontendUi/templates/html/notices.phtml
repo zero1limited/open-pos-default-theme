@@ -1,0 +1,85 @@
+<?php
+/**
+ * Hyvä Themes - https://hyva.io
+ * Copyright © Hyvä Themes 2020-present. All rights reserved.
+ * This product is licensed per Magento install
+ * See https://hyva.io/license
+ */
+
+declare(strict_types=1);
+
+use Hyva\Theme\Model\ViewModelRegistry;
+use Magento\Framework\Escaper;
+use Magento\Framework\View\Element\Template;
+use Magento\LoginAsCustomerFrontendUi\ViewModel\Configuration;
+
+/**
+ * @var Template $block
+ * @var Escaper $escaper
+ * @var ViewModelRegistry $viewModels
+ */
+$viewFileUrl = $block->getViewFileUrl('Magento_LoginAsCustomerFrontendUi::images/magento-icon.svg');
+
+/** @var Configuration $configurationViewModel */
+$configurationViewModel = $viewModels->require(Configuration::class);
+if (!$configurationViewModel->isEnabled()) {
+    return;
+}
+?>
+<div class="bg-pos-blue border-l border-r border-white mx-2 px-4"
+     x-data="initLoginAsCustomer()"
+     @private-content-loaded.window="receiveCustomerData(event.detail.data)"
+>
+    <div id="LoginAsCustomer" class="container mx-auto py-1 px-1 sm:px-6 lg:px-0" x-show="isVisible">
+        <div class="flex items-center justify-between flex-wrap">
+            <div class="w-0 flex-1 flex items-center">
+                <span class="flex p-3">
+			<img style="width:140px" alt="Open POS" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDI4LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgYmFzZVByb2ZpbGU9ImJhc2ljIiBpZD0iTGF5ZXJfMSIKCSB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDE4MCA0My45IgoJIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPgoJLnN0MHtmaWxsOiNGRkZGRkY7fQo8L3N0eWxlPgo8cGF0aCBjbGFzcz0ic3QwIiBkPSJNNDguOTIzLDExLjE2MWMxLjcyNCwwLjc3MywzLjAzMiwxLjg0MywzLjkyMywzLjI2OXMxLjM2NywzLjA5MSwxLjM2Nyw0LjkzNHMtMC40NzYsMy41NjctMS4zNjcsNC45MzQKCWMtMC44OTIsMS40MjctMi4yNTksMi40OTctMy45MjMsMy4yNjljLTEuNjY0LDAuNzczLTMuNjg2LDEuMTI5LTYuMDA0LDEuMTI5aC0zLjU2N3Y2LjA2M2gtOC4zODJWMTAuMDMxaDExLjk0OAoJQzQ1LjIzOCwxMC4wMzEsNDcuMTk5LDEwLjM4OCw0OC45MjMsMTEuMTYxeiBNNDQuOTQxLDIxLjUwNGMwLjU5NC0wLjUzNSwwLjgzMi0xLjI0OCwwLjgzMi0yLjE0cy0wLjI5Ny0xLjYwNS0wLjgzMi0yLjE0CgljLTAuNTk0LTAuNTM1LTEuNDI3LTAuNzczLTIuNTU2LTAuNzczaC0zLjAzMnY1LjgyNmgzLjAzMkM0My41MTQsMjIuMjc3LDQ0LjM0NiwyMi4wMzksNDQuOTQxLDIxLjUwNHoiLz4KPHBhdGggY2xhc3M9InN0MCIgZD0iTTc3LjU3NiwyOC41MTl2Ni4zMDFINTYuOTQ4VjEwLjAzMUg3Ny4xdjYuMzAxSDY1LjE1MnYyLjkxM2gxMC40NjJ2Ni4wMDRINjUuMTUydjMuMjY5CglDNjUuMTUyLDI4LjUxOSw3Ny41NzYsMjguNTE5LDc3LjU3NiwyOC41MTl6Ii8+CjxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0xMDUuMjc3LDEwLjAzMVYzNC44MmgtNi44OTZsLTkuMzkyLTExLjIzNVYzNC44MmgtOC4xNDRWMTAuMDMxaDYuODk2bDkuMzkyLDExLjIzNVYxMC4wMzFIMTA1LjI3N3oiLz4KPHBhdGggY2xhc3M9InN0MCIgZD0iTTEyNS43ODYsMTIuMjMxYzEuNzgzLDEuNDg2LDIuNjc1LDMuNTA3LDIuNjc1LDYuMTIzcy0wLjg5Miw0LjYzNy0yLjY3NSw2LjEyM3MtNC4yMjEsMi4xOTktNy4zMTIsMi4xOTlIMTExLjQKCXY4LjA4NWgtMS43ODNWMTAuMDMxaDguOTE3YzMuMDkxLDAsNS41ODgsMC43MTMsNy4zMTIsMi4xOTlIMTI1Ljc4NnogTTEyNC41MzgsMjMuMzQ3YzEuMzY3LTEuMTI5LDIuMDgxLTIuNzk0LDIuMDgxLTQuOTM0CglzLTAuNzEzLTMuODA0LTIuMDgxLTQuOTkzcy0zLjM4OC0xLjcyNC02LjA2My0xLjcyNEgxMTEuNFYyNS4xM2g3LjA3NGMyLjYxNiwwLDQuNjM3LTAuNTk0LDYuMDYzLTEuNzI0VjIzLjM0N3oiLz4KPHBhdGggY2xhc3M9InN0MCIgZD0iTTEzOC44MDQsMzMuMzM0Yy0xLjk2Mi0xLjA3LTMuNTA3LTIuNjE2LTQuNjM3LTQuNTE4cy0xLjY2NC00LjA0Mi0xLjY2NC02LjQyczAuNTM1LTQuNTE4LDEuNjY0LTYuNDIKCWMxLjEyOS0xLjkwMiwyLjY3NS0zLjM4OCw0LjYzNy00LjUxOGMxLjk2Mi0xLjA3LDQuMTYxLTEuNjY0LDYuNTk4LTEuNjY0czQuNjM3LDAuNTM1LDYuNTk4LDEuNjA1czMuNTA3LDIuNTU2LDQuNjM3LDQuNTE4CgljMS4xMjksMS45MDIsMS42NjQsNC4wNDIsMS42NjQsNi40MnMtMC41MzUsNC41MTgtMS42NjQsNi40MmMtMS4xMjksMS45MDItMi42NzUsMy4zODgtNC42MzcsNC41MTgKCWMtMS45NjIsMS4wNy00LjE2MSwxLjYwNS02LjU5OCwxLjYwNXMtNC42MzctMC41MzUtNi41OTgtMS42NjRWMzMuMzM0eiBNMTUxLjA1LDMxLjkwN2MxLjY2NC0wLjk1MSwyLjk3Mi0yLjI1OSwzLjk4My0zLjkyMwoJYzAuOTUxLTEuNjY0LDEuNDI3LTMuNTA3LDEuNDI3LTUuNTg4cy0wLjQ3Ni0zLjkyMy0xLjQyNy01LjU4OGMtMC45NTEtMS42NjQtMi4zMTgtMi45NzItMy45ODMtMy45MjMKCWMtMS42NjQtMC45NTEtMy41NjctMS40MjctNS42NDctMS40MjdzLTMuOTgzLDAuNDc2LTUuNjQ3LDEuNDI3Yy0xLjY2NCwwLjk1MS0zLjAzMiwyLjI1OS0zLjk4MywzLjkyMwoJYy0wLjk1MSwxLjY2NC0xLjQyNywzLjUwNy0xLjQyNyw1LjU4OHMwLjQ3NiwzLjkyMywxLjQyNyw1LjU4OGMwLjk1MSwxLjY2NCwyLjMxOCwyLjk3MiwzLjk4MywzLjkyMwoJYzEuNjY0LDAuOTUxLDMuNTY3LDEuNDI3LDUuNjQ3LDEuNDI3UzE0OS4zODYsMzIuODU4LDE1MS4wNSwzMS45MDd6Ii8+CjxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0xNjUuOTExLDM0LjA0N2MtMS42NjQtMC42NTQtMi45MTMtMS40MjctMy44NjQtMi40MzdsMC44MzItMS4zNjdjMC44OTIsMC44OTIsMi4wMjEsMS42NjQsMy41MDcsMi4yNTkKCWMxLjQ4NiwwLjU5NCwzLjAzMiwwLjg5Miw0LjYzNywwLjg5MmMyLjM3OCwwLDQuMTYxLTAuNDc2LDUuMzUtMS4zNjdzMS43ODMtMi4wODEsMS43ODMtMy41MDdjMC0xLjQyNy0wLjI5Ny0yLjAyMS0wLjk1MS0yLjY3NQoJYy0wLjY1NC0wLjY1NC0xLjQyNy0xLjE4OS0yLjM3OC0xLjU0NmMtMC45NTEtMC4zNTctMi4xOTktMC43MTMtMy44MDQtMS4wN2MtMS44NDMtMC40NzYtMy4yNjktMC44OTItNC4zOTktMS4zMDgKCWMtMS4wNy0wLjQxNi0yLjAyMS0xLjA3LTIuNzk0LTEuOTYyYy0wLjc3My0wLjg5Mi0xLjEyOS0yLjA4MS0xLjEyOS0zLjU2N3MwLjI5Ny0yLjMxOCwwLjk1MS0zLjMyOXMxLjYwNS0xLjc4MywyLjkxMy0yLjM3OAoJYzEuMzA4LTAuNTk0LDIuOTcyLTAuODkyLDQuOTM0LTAuODkyYzEuOTYyLDAsMi43MzQsMC4xNzgsNC4wNDIsMC41OTRjMS4zMDgsMC40MTYsMi40MzcsMC45NTEsMy40NDgsMS42MDVsLTAuNjU0LDEuNDI3CgljLTEuMDExLTAuNzEzLTIuMDgxLTEuMTg5LTMuMjY5LTEuNTQ2cy0yLjM3OC0wLjUzNS0zLjUwNy0wLjUzNWMtMi4zMTgsMC00LjA0MiwwLjQ3Ni01LjIzMSwxLjM2N3MtMS43ODMsMi4xNC0xLjc4MywzLjU2NwoJYzAsMS40MjcsMC4yOTcsMi4wMjEsMC45NTEsMi42NzVjMC42NTQsMC42NTQsMS40MjcsMS4xODksMi4zNzgsMS41NDZjMC45NTEsMC4zNTcsMi4yNTksMC43MTMsMy44NjQsMS4xMjkKCWMxLjg0MywwLjQ3NiwzLjI2OSwwLjg5Miw0LjMzOSwxLjMwOHMyLjAyMSwxLjA3LDIuNzk0LDEuOTAyYzAuNzczLDAuODkyLDEuMTI5LDIuMDIxLDEuMTI5LDMuNTA3YzAsMS40ODYtMC4yOTcsMi4zMTgtMC45NTEsMy4yNjkKCWMtMC42NTQsMS4wMTEtMS42NjQsMS43ODMtMi45NzIsMi4zNzhjLTEuMzY3LDAuNTk0LTIuOTcyLDAuODkyLTQuOTM0LDAuODkyYy0xLjk2MiwwLTMuNTY3LTAuMjk3LTUuMTcyLTAuOTUxTDE2NS45MTEsMzQuMDQ3eiIvPgo8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjYuMTU2LDE1LjIwM2MtMS4xODktMS45NjItMi44NTMtMy41MDctNC45OTMtNC42MzdzLTQuNTE4LTEuNjY0LTcuMTkzLTEuNjY0cy01LjA1MywwLjUzNS03LjE5MywxLjY2NAoJcy0zLjgwNCwyLjY3NS00Ljk5Myw0LjYzN1MwLDE5LjQyNCwwLDIxLjg2MXMwLjU5NCw0LjY5NiwxLjc4Myw2LjY1OHMyLjg1MywzLjUwNyw0Ljk5Myw0LjYzN2MyLjE0LDEuMTI5LDQuNTE4LDEuNjY0LDcuMTkzLDEuNjY0CglzNS4wNTMtMC41MzUsNy4xOTMtMS42NjRjMi4xNC0xLjEyOSwzLjgwNC0yLjY3NSw0Ljk5My00LjYzN3MxLjc4My00LjIyMSwxLjc4My02LjY1OFMyNy4zNDUsMTcuMTY1LDI2LjE1NiwxNS4yMDN6IE0xMy40OTQsMjguMTAzCglWMjEuOTJsLTUuMzUtMy4yNjljMS4wNy0xLjc4MywzLjA5MS0yLjk3Miw1LjM1LTIuOTcyYzMuNDQ4LDAsNi4yNDIsMi43OTQsNi4yNDIsNi4yNDJzLTIuNzk0LDYuMjQyLTYuMjQyLDYuMjQyVjI4LjEwM3oiLz4KPC9zdmc+Cg==" />
+                </span>
+                <p class="ml-3 font-bold text-white truncate border-l pl-6">
+                    <span x-text="notificationText"></span> <span class="font-normal"> is currently being served</span>
+                </p>
+            </div>
+            <div class="order-2 shrink-0 sm:order-3 sm:ml-3">
+                <?= $block->getChildHtml('login-as-customer-notice-links') ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    "use strict";
+
+    function initLoginAsCustomer() {
+        return {
+            isVisible: false,
+            adminUserId: null,
+            websiteName: null,
+            fullname: null,
+            notificationText: '',
+            receiveCustomerData: function receiveCustomerData(data) {
+                if (data.customer) {
+                    this.fullname = data.customer.fullname;
+                }
+
+                if (data.loggedAsCustomer) {
+                    this.adminUserId = data.loggedAsCustomer.adminUserId;
+                    this.websiteName = data.loggedAsCustomer.websiteName;
+                }
+
+                this.updateBanner();
+            },
+
+            updateBanner: function updateBanner() {
+                this.isVisible = !!this.adminUserId;
+
+                if (this.fullname !== undefined && this.websiteName !== undefined) {
+                    this.notificationText = '<?=
+                        $escaper->escapeHtml(__('<strong>%1</strong> '), ['<strong>']) ?>'
+                        .replace('%1', this.fullname)
+                        .replace('%2', this.websiteName);
+                }
+            }
+        }
+    }
+</script>

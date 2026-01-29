@@ -1,0 +1,78 @@
+<?php
+/**
+ * Hyvä Themes - https://hyva.io
+ * Copyright © Hyvä Themes 2020-present. All rights reserved.
+ * This product is licensed per Magento install
+ * See https://hyva.io/license
+ */
+
+declare(strict_types=1);
+
+use Hyva\Theme\Model\ViewModelRegistry;
+use Hyva\Theme\ViewModel\HeroiconsOutline;
+use Hyva\Theme\ViewModel\StoreConfig;
+use Magento\Checkout\Block\Cart\Sidebar as SidebarCart;
+use Magento\Framework\Escaper;
+use Magento\Framework\View\Element\Template;
+
+/** @var Escaper $escaper */
+/** @var Template $block */
+/** @var ViewModelRegistry $viewModels */
+
+/** @var HeroiconsOutline $heroicons */
+$heroicons = $viewModels->require(HeroiconsOutline::class);
+
+/** @var StoreConfig $storeConfig */
+$storeConfig = $viewModels->require(StoreConfig::class);
+// Force minicart to yes in case merchant doesn't have this set in admin
+// $showMiniCart = $storeConfig->getStoreConfig(SidebarCart::XML_PATH_CHECKOUT_SIDEBAR_DISPLAY);
+$showMiniCart = '1';
+?>
+<script>
+    function initHeader () {
+        return {
+            searchOpen: false,
+            cart: {},
+            isCartOpen: true, // Ensure the cart drawer is open by default
+            getData(data) {
+                if (data.cart) { this.cart = data.cart }
+            },
+            isCartEmpty() {
+                return false; // Keep the cart icon always active
+            },
+            toggleCart(event) {
+                if (event.detail && event.detail.isOpen !== undefined) {
+                    this.isCartOpen = event.detail.isOpen;
+                } else {
+                    this.isCartOpen = true; // Ensure cart is open when toggled
+                }
+            }
+        }
+    }
+</script>
+<div id="header"
+     class="relative w-full"
+     x-data="initHeader()"
+     @private-content-loaded.window="getData(event.detail.data)"
+>
+    <a href="/" id="backtobasket" style="display: none;"><?php echo __('< Basket'); ?></a>
+    <div class="container flex flex-wrap lg:flex-nowrap items-center justify-between w-full px-6 py-3 mx-auto mt-0">
+        
+        <!--Logo-->
+        <?= $block->getChildHtml('logo'); ?>
+
+        <div class="flex items-center gap-2 md:gap-1 order-3 md:-mr-1">
+
+            <div class="hidden">
+                <!-- Additional Header Elements -->
+                <?= $block->getChildHtml('additional') ?>
+            </div>
+
+        </div>
+    </div>
+
+    <!--Authentication Pop-Up-->
+    <?= $block->getChildHtml('authentication-popup'); ?>
+</div>
+
+<?= $block->getChildHtml('openpos.cart'); ?>
