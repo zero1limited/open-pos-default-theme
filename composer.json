@@ -13,7 +13,6 @@
         "name": "ZERO-1 Ltd",
         "email": "sales@zero1.co.uk"
     }],
-    "license": "see LICENSE.md",
     "autoload": {
         "files": [
             "registration.php"
