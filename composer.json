@@ -1,5 +1,8 @@
 {
     "name": "zero1/open-pos-default-theme",
+    "license": [
+        "OSL-3.0"
+    ],
     "description": "OpenPOS default theme",
     "config": {
         "sort-packages": true
