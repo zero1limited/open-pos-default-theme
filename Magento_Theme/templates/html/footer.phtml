@@ -13,6 +13,7 @@ use Magento\Framework\Escaper;
 use Hyva\Theme\Model\ViewModelRegistry;
 use Hyva\Theme\ViewModel\HeroiconsOutline;
 use Hyva\Theme\ViewModel\HeroiconsSolid;
+use Zero1\OpenPos\ViewModel\Admin;
 
 /** @var Template $block */
 /** @var Escaper $escaper */
@@ -21,6 +22,9 @@ use Hyva\Theme\ViewModel\HeroiconsSolid;
 /** @var HeroiconsOutline $heroicons */
 $heroicons = $viewModels->require(HeroiconsOutline::class);
 $heroiconsSolid = $viewModels->require(HeroiconsSolid::class);
+
+/** @var Admin $admin */
+$admin = $viewModels->require(Admin::class);
 ?>
 
 <div x-data="{ open: false }" class="openpos-settings">
@@ -48,6 +52,7 @@ $heroiconsSolid = $viewModels->require(HeroiconsSolid::class);
 
             <div class="w-full openpos-popup-content">
                 <a href="/openpos/order/index/" class="flex items-center w-full p-8 border-b cursor-pointer bg-container-lighter border-container level-0 font-bold"><?php echo __('View orders'); ?></a>
+                <a href="<?= $escaper->escapeUrl($admin->getAdminUrl()); ?>" class="flex items-center w-full p-8 border-b cursor-pointer bg-container-lighter border-container level-0 font-bold"><?php echo __('Return to admin'); ?></a>
                 <a href="/openpos/tillsession/login/" class="flex items-center w-full p-8 border-b cursor-pointer bg-container-lighter border-container level-0 font-bold"><?php echo __('Logout of '); ?><span class="openpos-logo"></span></a>
             </div>
 
