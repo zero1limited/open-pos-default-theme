@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Hyvä's generated base layout reset (Hyva_BaseLayoutReset) empties core Magento_LayeredNavigation's
+ * page_layout/1column.xml (its di.xml excludes "truecolumn.xml" instead of "1column.xml"), which is where core
+ * moves catalog.leftnav out of sidebar.main (absent on the POS 1column category page) into content.top.
+ * Without that move, core's empty.xml move (pulled in by Hyvä's 1column page layout) parks catalog.leftnav in
+ * category.product.list.additional, which the POS product/list.phtml override never prints. Restore the move here.
+ * Note: openpos-styles.css additionally hides this block with display:none on category/search pages.
+ */
+-->
+<layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_layout.xsd">
+    <move element="catalog.leftnav" destination="content.top" after="-"/>
+</layout>
