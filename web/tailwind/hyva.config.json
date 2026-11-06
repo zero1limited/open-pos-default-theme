@@ -1,6 +1,16 @@
 {
   "tailwind": {
-    "include": [],
+    "include": [
+      {
+        "src": "vendor/hyva-themes/magento2-default-theme"
+      },
+      {
+        "src": "vendor/zero1/open-pos"
+      },
+      {
+        "src": "vendor/zero1/open-pos-rma"
+      }
+    ],
     "exclude": []
   },
   "tokens": {
