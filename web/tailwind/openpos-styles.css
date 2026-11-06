@@ -336,9 +336,8 @@ Copy price files from tailwind/components and manipulate as needed */
     border-radius: 4px;
 }
 
+/* Positioned by Hyvä (sticky, below the header), so messages don't cover the logo */
 .page.messages {
-    position: fixed;
-    width: 70%;
     button {
         color: #fff;
     }
